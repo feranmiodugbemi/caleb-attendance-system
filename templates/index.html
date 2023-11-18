@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Image converter</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+  <!-- component -->
+  <div class="relative min-h-screen flex items-center justify-center bg-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 bg-gray-500 bg-no-repeat bg-cover relative items-center" style="background-image: url(https://images.unsplash.com/photo-1532423622396-10a3f979251a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1500&q=80);">
+    <div class="absolute bg-black opacity-60 inset-0 z-0"></div>
+    <div class="max-w-md w-full space-y-8 p-10 bg-white rounded-xl shadow-lg z-10">
+      <div class="grid  gap-8 grid-cols-1">
+        <div class="flex flex-col ">
+          <div class="flex flex-col sm:flex-row items-center">
+            <h2 class="font-semibold text-lg mr-auto">Caleb University attendance system</h2>
+            <div class="w-full sm:w-auto sm:ml-auto mt-3 sm:mt-0"></div>
+          </div>
+          <div class="mt-5">
+            <div class="form">
+              <div class="md:space-y-2 mb-3">
+                <label class="text-xs font-semibold text-gray-600 py-2">Upload photo<abbr class="hidden" title="required">*</abbr></label>
+                <div class="text-center">
+                    <input type="file" id="fileInput" accept="image/*" onchange="displayImage()" style="display:none;" />
+                    <label for="fileInput">
+                      <img
+                        id="avatarImage"
+                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHsAAAB7CAMAAABjGQ9NAAAAMFBMVEX////KysrHx8fNzc34+PjR0dHy8vL8/PzW1tbu7u7e3t7l5eXZ2dnr6+v19fXi4uJvFflHAAACkUlEQVRoge2a2baDIAxFZRas+v9/e+mgHa4tiZ6Uh3LW6vNuMAkZ6LqmpqampqYqsj4O85yy5jF6+z3wlJxSWuvz7yLj0vQdcp+pr9K69/Lo9B98w7tRluzVO/SZbiRtf2v0Qh+kyLYvoDNcyHLrimilTzJoU0ZLGW4I5CwjgC65meCpT0R0hkc0+0RmKxOw6EAmZ8NnLDvSzc7C3mtUT7sajs1ujmO2cki0ZaGx3uZZnxub3EYmG3mTz0w20tkYmeXCRuZVnpsr1VdkI4OMeH+uQl6kFdmBzcYll59lM9HQhF7Tz8tNwbOAucWycwuucuEeee4KUWh6fXyHo2YBNdl2Bxv1wdnhnQVC7/A1YIBzQwwZ4KzO4CxgWzSw2bhClVmeQ/vgiYlGdoM17++qdSq3L0F2/9wPDp0qs5oi8Khp+jTDfUWDZx5diMTkplMEz5k6cnITGSUT+39o37+ImlglhrnEeQ+sYnkSjS0xR6YmVuhsbRUpsaKHqTd5itlSCxPKocscOSm7iC2pKFEmtpYtepuQp51VTG1SntbYP8eu5+cf9+4LHFuiriI1J7gpz6Nq1kzUvkjgNgnUAl1XK5FFrjJ6Kwo/dMboAZ5gOM0g+NUBaykJDbPA3gvCfN1uPNwqwFG1055xKmigGghPiTYs748fexhJT4k24GY8Ro9uJ/lK7w+MF9lz1H/43dHGjKxNeNpFjgeO+wFu+Ofuueu493TmC84IIzPpdtgV0R/pbqAEXNx6+gqg60LAhfEkAl7wp+10Y/2YnCB4wbs0+vBs7+VxszB4weeq6p5yKA9PwX9gXVID8hcbfqurLH/lCNDFcP4CCqPcNKZKaKXm7vvfehVxOiwh09iN3djCbFNPfz7mInY4q4KSAAAAAElFTkSuQmCC"
+                        class="mx-auto mb-4 w-32 rounded-lg"
+                        alt="Avatar"
+                        style="cursor:pointer;" />
+                    </label>
+                    <h5 class="mb-2 text-xl font-medium leading-tight" id="userName">John Doe</h5>
+                    <p class="text-sm text-red-500 hidden mt-3 no-face-detected" id="error">No Face detected.</p>
+                    <p class="text-sm text-red-500 hidden mt-3 more-than-1-face-detected" id="error">More than 1 Face detected.</p>
+                  </div>
+              <div class="md:flex flex-row md:space-x-4 w-full text-xs">
+                <div class="mb-3 space-y-2 w-full text-xs">
+                  <label class="font-semibold text-gray-600 py-2">Full Name <abbr title="required">*</abbr></label>
+                  <input placeholder="Full Name" oninput="updateUserName(this.value)" onblur="updateUserName(this.value)" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4 full-name" required="required" type="text" name="integration[shop_name]" id="full-name">
+                  <p class="text-red-500 text-xs hidden" id="full-name-error"></p>
+                </div>
+                <div class="mb-3 space-y-2 w-full text-xs">
+                  <label class="font-semibold text-gray-600 py-2">Phone number <abbr title="required">*</abbr></label>
+                  <input placeholder="081604355459" oninput="validatePhoneNumber(this.value)" onblur="validatePhoneNumber(this.value)" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4" required="required" type="text" name="integration[shop_name]" id="integration_shop_name">
+                  <p class="text-red-500 text-xs hidden" id="phoneNumber-error"></p>
+                </div>
+              </div>
+              <div class="mb-3 space-y-2 w-full text-xs">
+                <label class=" font-semibold text-gray-600 py-2">Official Email</label>
+                <div class="flex flex-wrap items-stretch w-full mb-4 relative">
+                  <div class="flex">
+                    <span class="flex items-center leading-normal bg-grey-lighter border-1 rounded-r-none border border-r-0 border-blue-300 px-3 whitespace-no-wrap text-grey-dark text-sm w-12 h-10 bg-blue-300 justify-center items-center  text-xl rounded-lg text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" d="M16.5 12a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zm0 0c0 1.657 1.007 3 2.25 3S21 13.657 21 12a9 9 0 10-2.636 6.364M16.5 12V8.25"/>
+                        </svg>
+                    </span>
+                  </div>
+                  <input type="text" oninput="validateCalebUniversityEmail(this.value)" onblur="validateCalebUniversityEmail(this.value)" class="flex-shrink flex-grow flex-auto leading-normal w-px flex-1 border border-l-0 h-10 border-grey-light rounded-lg rounded-l-none px-3 relative focus:border-blue focus:shadow" placeholder="username@calebuniversity.edu.ng" id="email">
+                </div>
+                <div class="block dsiplay-center">
+                  <p class="text-sm text-red-500 hidden mt-2" id="email-error-1">Invalid Email</p>
+                  <p class="text-sm text-red-500 hidden" id="email-error-2">Please Input an email</p>
+                </div>
+                
+                <div class="md:flex md:flex-row md:space-x-4 w-full text-xs">
+                  <div class="w-full flex flex-col mb-3">
+                    <label class="font-semibold text-gray-600 py-2">Matric Number</label>
+                    <input placeholder="23/*****" oninput="validateMatricNumber(this.value)" onblur="validateMatricNumber(this.value)" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4" type="text" name="matricNumber" id="matricNumber">
+                    <div>
+                      <p class="text-red-500 text-sm mt-1" id="matric-number-error"></p>
+                    </div>
+                  </div>
+                  
+                  <div class="w-full flex flex-col mb-3">
+                    <label class="font-semibold text-gray-600 py-2">Course<abbr title="required">*</abbr></label>
+                    <select class="block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4 md:w-full " required="required" name="integration[city_id]" id="integration_city_id">
+                      <option value="">Seleted Course</option>
+                      <option value="">Mass communication</option>
+                      <option value="">Computer science</option>
+                      <option value="">Cyber security</option>
+                      <option value="">Micro biology</option>
+                      <option value="">Bio checmistry</option>
+                      <option value="">Architecture</option>
+                      <option value="">Psychology</option>
+                    </select>
+                    
+                    <p class="text-red-500 text-sm mt-3 hidden" id="course-error">Please select a course.</p>
+                    
+                  </div>
+                </div>
+              
+              <div class="md:flex md:flex-row md:space-x-4 w-full text-xs">
+                <div class="w-full flex flex-col mb-3">
+                    <label class="font-semibold text-gray-600 py-2">Gender<abbr title="required">*</abbr></label>
+                    <select id="firstSelect" onchange="updateSecondSelect()" class="block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4 md:w-full " required="required" name="integration[city_id]" id="integration_city_id">
+                      <option value="Seleted Gender">Seleted Gender</option>
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                    </select>
+                    <p class="text-sm text-red-500 hidden mt-3" id="error">Fill out this field.</p>
+                  </div>  
+                <div class="w-full flex flex-col mb-3">
+                  <label class="font-semibold text-gray-600 py-2">Hostel<abbr title="required">*</abbr></label>
+                  <select id="secondSelect" class="block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4 md:w-full " required="required" name="integration[city_id]" id="integration_city_id">
+                    <option value="Select Hostel">Select Hostel</option>
+                    <optgroup id="maleOptions" label="Male">
+                        <option disabled>Elisha</option>
+                        <option disabled>Joshua</option>
+                        <option disabled>Integrity</option>
+                    </optgroup>
+                    <optgroup id="femaleOptions" label="Female">
+                        <option disabled>Rebecca</option>
+                        <option disabled>Esther</option>
+                        <option disabled>Ruth</option>
+                    </optgroup>
+                  </select>
+                  <p class="text-sm text-red-500 hidden mt-3" id="error">Fill out this field.</p>
+                </div>
+              </div>
+              <div class="mt-5 text-right md:space-x-3 md:block flex flex-col-reverse">
+                <button class="mb-2 md:mb-0 bg-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded-full hover:shadow-lg hover:bg-gray-100"> Cancel </button>
+                <button disabled class="focus:outline-none disabled:opacity-25 mb-2 md:mb-0 bg-green-400 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white rounded-full hover:shadow-lg hover:bg-green-500">Save</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <script>
+      
+      function updateSecondSelect() {
+        var firstSelect = document.querySelector("#firstSelect");
+        var secondSelect = document.querySelector("#secondSelect");
+        var maleOptions = secondSelect.querySelectorAll("#maleOptions option");
+        var femaleOptions = secondSelect.querySelectorAll("#femaleOptions option");
+    
+        // Reset second select options
+        for (var i = 0; i < maleOptions.length; i++) {
+            maleOptions[i].disabled = true;
+        }
+        for (var i = 0; i < femaleOptions.length; i++) {
+            femaleOptions[i].disabled = true;
+        }
+    
+        // Show options based on the first selection
+        if (firstSelect.value === "male") {
+            for (var i = 0; i < maleOptions.length; i++) {
+                maleOptions[i].disabled = false;
+            }
+        } else if (firstSelect.value === "female") {
+            for (var i = 0; i < femaleOptions.length; i++) {
+                femaleOptions[i].disabled = false;
+            }
+        }
+      }
+
+      function validatePhoneNumber(phoneNumber){
+        let error = document.getElementById("phoneNumber-error");
+        if (phoneNumber.length === 11 && /^\d+$/.test(phoneNumber)) {
+            error.classList.add("hidden");
+            return true
+        } else if (phoneNumber === "") {
+            error.classList.remove("hidden");
+            error.textContent = "Phone Number is required";
+            return false
+        } else {
+          error.classList.remove("hidden");
+          error.textContent = "Invalid Phone Number";
+          return false
+        }
+      }
+    
+    
+      
+      function updateUserName(val) {
+        var userName = document.getElementById("userName"); // Corrected element ID
+        var fullNameError = document.getElementById("full-name-error"); // Corrected element ID
+    
+        if (val === "") {
+            userName.textContent = "John Doe";
+            fullNameError.classList.remove("hidden");
+            fullNameError.textContent = "Full name is required.";
+            return false // Updated error message
+        } else {
+            fullNameError.classList.add("hidden"); // Hide the error message when val is not empty
+            userName.textContent = val;
+            return true
+        }
+      }
+      
+      function displayImage() {
+          var fileInput = document.getElementById('fileInput');
+          var avatarImage = document.getElementById('avatarImage');
+          var userName = document.getElementById('userName');
+          var file = fileInput.files[0];
+          var reader = new FileReader();
+      
+          reader.onload = function(e) {
+            avatarImage.src = e.target.result;
+          }
+          reader.readAsDataURL(file);
+           // Set user name to the file name
+      }
+      function validateCalebUniversityEmail(email) {
+        const emailRegex = /^[^\s@]+@calebuniversity\.edu\.ng$/;
+        const error1 = document.getElementById("email-error-1");
+        const error2 = document.getElementById("email-error-2");
+    
+        if (email.trim() === "") {
+            error1.classList.add("hidden");
+            error2.classList.remove("hidden");
+            return true
+        } else if (!emailRegex.test(email)) {
+            error1.classList.remove("hidden");
+            error2.classList.add("hidden");
+            return false
+        } else {
+            error1.classList.add("hidden");
+            error2.classList.add("hidden");
+            return false
+        }
+      }
+      function validateMatricNumber(matricNumber){
+        
+      }
+    
+    </script>
+</body>
+</html>
